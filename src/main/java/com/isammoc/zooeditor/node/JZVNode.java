@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.isammoc.zooviewer.node;
+package com.isammoc.zooeditor.node;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -42,8 +42,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import net.isammoc.zooviewer.model.ZVModel;
-import net.isammoc.zooviewer.model.ZVModelListener;
+import com.isammoc.zooeditor.model.ZVModel;
+import com.isammoc.zooeditor.model.ZVModelListener;
+
 
 /**
  * Editor panel for a node.

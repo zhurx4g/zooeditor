@@ -12,12 +12,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.isammoc.zooviewer.tree;
+package com.isammoc.zooeditor.tree;
 
 import javax.swing.JTree;
 
-import net.isammoc.zooviewer.model.ZVModel;
-import net.isammoc.zooviewer.node.ZVNode;
+import com.isammoc.zooeditor.model.ZVModel;
+import com.isammoc.zooeditor.node.ZVNode;
+
 
 public class JZVTree extends JTree {
     /** */

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.isammoc.zooviewer.model;
+package com.isammoc.zooeditor.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +25,6 @@ import java.util.concurrent.Executors;
 
 import javax.swing.event.EventListenerList;
 
-import net.isammoc.zooviewer.node.ZVNode;
-import net.isammoc.zooviewer.node.ZVNodeImpl;
 
 import org.apache.zookeeper.AsyncCallback.ChildrenCallback;
 import org.apache.zookeeper.CreateMode;
@@ -36,6 +34,9 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.common.PathUtils;
 import org.apache.zookeeper.data.Stat;
+
+import com.isammoc.zooeditor.node.ZVNode;
+import com.isammoc.zooeditor.node.ZVNodeImpl;
 
 /**
  * Implementation of the ZooViewer model.

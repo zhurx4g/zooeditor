@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.isammoc.zooviewer;
+package com.isammoc.zooeditor;
 
 import java.awt.Component;
 import java.awt.Frame;
@@ -39,19 +39,28 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import net.isammoc.zooviewer.model.ZVModel;
-import net.isammoc.zooviewer.model.ZVModelImpl;
-import net.isammoc.zooviewer.node.JZVNode;
-import net.isammoc.zooviewer.node.ZVNode;
-import net.isammoc.zooviewer.tree.JZVTree;
 
 import org.apache.log4j.lf5.viewer.categoryexplorer.TreeModelAdapter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+
+import com.isammoc.zooeditor.model.ZVModel;
+import com.isammoc.zooeditor.model.ZVModelImpl;
+import com.isammoc.zooeditor.node.JZVNode;
+import com.isammoc.zooeditor.node.ZVNode;
+import com.isammoc.zooeditor.tree.JZVTree;
+import com.isammoc.zooeditor.widgets.InputDialog;
 
 public class App {
-    private static final String DEFAULT_CONNECTION_STRING = "127.0.0.1:2181";
-    private static ResourceBundle bundle = ResourceBundle.getBundle(App.class
-            .getCanonicalName());
+    private static final String DEFAULT_CONNECTION_STRING = "10.237.110.36:2181";
+    private static ResourceBundle bundle = ResourceBundle.getBundle(App.class.getCanonicalName());
 
+    private static Display display = Display.getDefault();
+    private static Shell shell = new Shell(display);
+    
     /**
      * @param args
      * @throws IOException
@@ -69,27 +78,12 @@ public class App {
             }
         }
 
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (InstantiationException e1) {
-            e1.printStackTrace();
-        } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e1) {
-            e1.printStackTrace();
-        }
-
-        //
         final ZVModel model = new ZVModelImpl(connexionString);
         final JZVNode nodeView = new JZVNode(model);
         final JZVTree tree = new JZVTree(model);
 
-        String editorViewtitle = String.format("%s - Editor View - ZooViewer",
-                connexionString);
-        String displayViewtitle = String.format(
-                "%s - Display View - ZooViewer", connexionString);
+        String editorViewtitle = String.format("%s - Editor View - ZooViewer",connexionString);
+        String displayViewtitle = String.format("%s - Display View - ZooViewer", connexionString);
 
         final JFrame jfEditor = new JFrame(editorViewtitle);
         jfEditor.setName("zv_editor");
@@ -137,7 +131,6 @@ public class App {
                     try {
                         model.close();
                     } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                     disposeOtherWindows(jfEditor, jfDisplay);
@@ -191,25 +184,18 @@ public class App {
     }
 
     private static String inputConnectionString(String defaultString) {
-        JOptionPane pane = new JOptionPane(
-                bundle.getString("start.connection.message"),
-                JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        pane.setWantsInput(true);
-        pane.setInputValue(defaultString);
-        pane.setInitialValue(defaultString);
-        pane.setInitialSelectionValue(defaultString);
-
-        JDialog dialog = pane.createDialog(null,
-                bundle.getString("start.connection.title"));
-        dialog.setVisible(true);
-
+        InputDialog inputDialog = new InputDialog(shell);
+        inputDialog.setTitle(bundle.getString("start.connection.title"));
+        inputDialog.setText(bundle.getString("start.connection.message"));
+        
+        
         String connectionString = null;
-        Object inputValue = pane.getInputValue();
+        String inputValue = inputDialog.open(defaultString);
         if (inputValue == null) {
             return null;
         }
-        connectionString = (String) inputValue;
-        if (connectionString.equals("")) {
+        connectionString = inputValue;
+        if (connectionString==null||connectionString.equals("")) {
             connectionString = DEFAULT_CONNECTION_STRING;
         }
         return inputValue == null ? null : (String) inputValue;

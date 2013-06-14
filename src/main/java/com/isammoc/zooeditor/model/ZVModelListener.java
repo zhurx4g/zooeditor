@@ -12,11 +12,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.isammoc.zooviewer.model;
+package com.isammoc.zooeditor.model;
 
 import java.util.EventListener;
 
-import net.isammoc.zooviewer.node.ZVNode;
+import com.isammoc.zooeditor.node.ZVNode;
+
 
 public interface ZVModelListener extends EventListener {
     void nodeCreated(ZVNode newNode);
